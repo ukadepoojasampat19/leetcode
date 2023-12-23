@@ -1,29 +1,7 @@
 class Solution {
 public:
-    int left_bound(vector<int>& nums,int l,int u,int target,int index)
-    {
-      
-         if(l<=u)
-        {
-            int mid=(l+u)/2;
-            if( nums[mid] == target)
-            {
-                index=mid;
-                return left_bound(nums,l,mid-1,target,index);
-               
-            }
-            else if(target < nums[mid])
-            { 
-                return left_bound(nums,l,mid-1,target,index);
-            }
-            else
-            {
-                return left_bound(nums,mid+1,u,target,index);
-            }
-        }
-        return index;
-    }
-    int right_bound(vector<int>& nums,int l,int u,int target,int index)
+   
+    int find_bound(vector<int>& nums,int l,int u,int target,int index,bool first)
     {
        
          if(l<=u)
@@ -32,16 +10,24 @@ public:
             if( nums[mid] == target)
             {
                 index=mid;
-                return right_bound(nums,mid+1,u,target,index);
+                if(first)
+                {
+                    return find_bound(nums,l,mid-1,target,index,first);
+                }
+                else
+                {
+                    return find_bound(nums,mid+1,u,target,index,first);
+                }
+                
                
             }
             else if(target < nums[mid])
             { 
-                return right_bound(nums,l,mid-1,target,index);
+                return find_bound(nums,l,mid-1,target,index,first);
             }
             else
             {
-                return right_bound(nums,mid+1,u,target,index);
+                return find_bound(nums,mid+1,u,target,index,first);
             }
         }
         return index;
@@ -49,15 +35,14 @@ public:
    
     vector<int> searchRange(vector<int>& nums, int target) {
         int n=nums.size();
-        vector<int> result;
+      
         int l=0;
         int u=n-1;
         int index=0;
-        int left=left_bound(nums,l,u,target,-1);
-        int right=right_bound(nums,l,u,target,-1);
-        result.push_back(left);
-         result.push_back(right);
-        return result;
+        int left=find_bound(nums,l,u,target,-1,true);
+        int right=find_bound(nums,l,u,target,-1,false);
+        
+        return {left,right};
         
        
         

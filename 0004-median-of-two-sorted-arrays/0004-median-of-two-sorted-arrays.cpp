@@ -1,65 +1,39 @@
-#include <vector>
-
 class Solution {
 public:
- double findMedianSortedArrays(std::vector<int>& nums1, std::vector<int>& nums2) {
- /*   int m = nums1.size(), n = nums2.size();
     
-    // Handle empty arrays
-    if (m == 0) return (n % 2 == 0) ? (nums2[n / 2 - 1] + nums2[n / 2]) / 2.0 : nums2[n / 2];
-    if (n == 0) return (m % 2 == 0) ? (nums1[m / 2 - 1] + nums1[m / 2]) / 2.0 : nums1[m / 2];
-
-    long total = m + n; // Use long to prevent overflow
-    int i = 0, j = 0, count = 0;
-    double median1, median2;
-
-    // Traverse both arrays and find the median elements
-    while (count <= total / 2) {
-      // Get the median element
-      if (i != m && (j == n || nums1[i] <= nums2[j])) {
-        median1 = nums1[i];
-        i++;
-      } else {
-        median1 = nums2[j];
-        j++;
-      }
-
-      // Check if we need to find another median (odd total elements)
-      if (count == total / 2) {
-        break;
-      }
-
-      // Get the second median element (if needed)
-      if (i != m && (j == n || nums1[i] < nums2[j])) {
-        median2 = nums1[i];
-        i++;
-      } else {
-        median2 = nums2[j];
-        j++;
-      }
-      count++;
+    void merge_sort(vector<int>& nums1, vector<int>& nums2, int idx, vector<int>& result) {
+        
+        int l = idx;
+        int r = idx;
+        
+        while (l < nums1.size() && r < nums2.size()) {
+            if (nums1[l] < nums2[r]) {
+                result.push_back(nums1[l]);
+                l++;
+            } else {
+                result.push_back(nums2[r]);
+                r++;
+            }
+        }
+        
+        while (l < nums1.size()) {
+            result.push_back(nums1[l]);
+            l++;
+        }
+        
+        while (r < nums2.size()) {
+            result.push_back(nums2[r]);
+            r++;
+        }
     }
-
-    // Calculate the final median based on even or odd total elements
-    if (total % 2 == 0) {
-      return (median1 + median2) / 2.0;
-    } else {
-      return median2;
-    }*/
-     
-     vector<int> result;
-     double final_n;
-     for(int i=0;i< (nums1.size());i++)
-     {
-         result.push_back(nums1[i]);
-     }
-      for(int i=0;i< (nums2.size());i++)
-     {
-         result.push_back(nums2[i]);
-     }
-     sort(result.begin(),result.end());
-     
-     int total_size = result.size();
+    
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        vector<int> result;
+        double final_n;
+        
+        merge_sort(nums1, nums2, 0, result);
+        
+        int total_size = result.size();
         
         if (total_size % 2 != 0) {
             int res = total_size / 2;
@@ -70,5 +44,5 @@ public:
         }
         
         return final_n;
-  }
+    }
 };

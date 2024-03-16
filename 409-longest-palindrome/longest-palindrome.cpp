@@ -6,19 +6,21 @@ public:
         for (char ch : s)
             counts[ch]++;
         
-        int length = 0;
-        bool hasOdd = false;
-        
-        for (auto& p : counts) {
-            length += p.second / 2 * 2; // add even count of characters
-            if (p.second % 2 == 1)
-                hasOdd = true; // flag that there is at least one odd count character
+        int sum=0;
+        bool check =false;
+        for(auto& n: counts)
+        {
+            sum+= n.second / 2 * 2;
+            if( n.second % 2 == 1)
+            {
+                check=true;
+            }
+            
         }
-        
-        // If there was at least one character with an odd count, add 1 to the length
-        if (hasOdd)
-            length++;
-        
-        return length;
+        if(check)
+        {
+            sum++;
+        }
+        return sum;
     }
 };

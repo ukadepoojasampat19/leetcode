@@ -50,42 +50,48 @@ public:
             }
         }
         return final[index];*/
-         int n = s.size();
-    if (n == 0) return "";
-    
-    // dp[i][j] will be 'true' if the string from index i to j is a palindrome.
-    vector<vector<bool>> dp(n, vector<bool>(n, false));
+       int n=s.length();
+       if(n == 0)
+       {
+         return "";
+       }
 
-    // Initialize variables to track the longest palindrome found.
-    int start = 0, maxLen = 1;
+       vector<vector<bool>> dp(n,vector<bool>(n,false));
 
-    // Every single character is a palindrome.
-    for (int i = 0; i < n; ++i)
-        dp[i][i] = true;
+       int start=0,maxlen=1;
 
-    // Palindromes of length 2.
-    for (int i = 0; i < n - 1; ++i) {
-        if (s[i] == s[i + 1]) {
-            dp[i][i + 1] = true;
-            start = i;
-            maxLen = 2;
-        }
-    }
+       for(int i=0;i<n;i++)
+       {
+         dp[i][i]=true;
+       }
 
-    // Palindromes of length greater than 2.
-    for (int len = 3; len <= n; ++len) {
-        for (int i = 0; i <= n - len; ++i) {
-            int j = i + len - 1; // End index of current substring.
+       //substring length equal to 2
+       for(int i=0;i<n-1;i++)
+       {
+         if(s[i]==s[i+1])
+         {
+            dp[i][i+1]=true;
+            start=i;
+            maxlen=2;
+         }
+       }
 
-            // If current substring is palindrome and outer characters are same.
-            if (dp[i + 1][j - 1] && s[i] == s[j]) {
-                dp[i][j] = true;
-                start = i;
-                maxLen = len;
+       //substring length equal to greater than 2
+
+       for(int len=3;len<=n;len++)
+       {
+        for(int i=0;i<n-len+1;i++)
+        {
+            int j=i+len-1;  //ending index of the longest substring
+
+            if(dp[i+1][j-1] && s[i] == s[j])
+            {
+                dp[i][j]=true;
+                start=i;
+                maxlen=len;
             }
         }
-    }
-
-    return s.substr(start, maxLen);
+       }
+       return s.substr(start,maxlen);
     }
 };

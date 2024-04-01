@@ -15,8 +15,15 @@ HAVING SUM(t.amount) > 10000;*/
 
 
 
-select u.name , sum(t.amount) as balance
+/*select u.name , sum(t.amount) as balance
 from Users u
 join Transactions t on u.account = t.account
 group by u.account
-having sum(t.amount) > 10000;
+having sum(t.amount) > 10000;*/
+
+
+SELECT name, SUM(amount) AS balance
+FROM Users
+INNER JOIN Transactions ON Users.account = Transactions.account
+GROUP BY name
+HAVING SUM(amount) > 10000;

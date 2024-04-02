@@ -10,7 +10,6 @@ public:
 
         for(int i=0; i< s.length(); i++)
         {
-
             char s_char=s[i];
             char t_char=t[i];
 

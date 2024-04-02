@@ -1,11 +1,11 @@
 class Solution {
 public:
     bool isIsomorphic(string s, string t) {
-        if(s.length() != t.length())
+       if(s.length() != t.length())
         {
             return false;
         }
-        unordered_map<char,char> str1;
+        /*unordered_map<char,char> str1;
         unordered_map<char,char> str2;
 
         for(int i=0; i< s.length(); i++)
@@ -39,6 +39,30 @@ public:
                 }
             }
         }
+        return true;*/
+        unordered_map<char,char> map_char;
+        unordered_set<char> set_vals;
+
+        for(int i=0;i<s.length();i++)
+        {
+            if(map_char.find(s[i]) != map_char.end())
+            {
+                 if(map_char[s[i]] != t[i])
+                 {
+                    return false;
+                 }
+            }
+            else
+            {
+                if(set_vals.find(t[i]) != set_vals.end())
+                {
+                    return false;
+                }
+                map_char[s[i]]=t[i];
+                set_vals.insert(t[i]);
+            }
+        }
+
         return true;
         
     }

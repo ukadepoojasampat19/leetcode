@@ -33,40 +33,45 @@ public:
            return result;
         }
         return result;*/
-        int leftCount = 0;
-        int rightCount = 0;
-        std::stack<char> stack;
-
-        // Pass 1
-        for (char ch : s) {
-            if (ch == '(') {
-                leftCount++;
-            } else if (ch == ')') {
-                rightCount++;
+       int l_ct=0;
+       int r_ct=0;
+        stack<char> temp;
+       for(int i=0;i<s.length();i++)
+       {
+            char num=s[i];
+            if(num == '(')
+            {
+                l_ct++;
             }
-            if (rightCount > leftCount) {
-                rightCount--;
+            else if(num == ')')
+            {
+                r_ct++;
+            }
+            if(r_ct > l_ct)
+            {
+                r_ct--;
                 continue;
-            } else {
-                stack.push(ch);
+            }
+            else
+            {
+                temp.push(num);
             }
         }
-
-        std::string result = "";
-        
-        // Pass 2
-        while (!stack.empty()) {
-            char currentChar = stack.top();
-            stack.pop();
-            if (leftCount > rightCount && currentChar == '(') {
-                leftCount--;
-            } else {
-                result += currentChar;
+        string result="";
+        while(!temp.empty())
+        {
+            char num=temp.top();
+            temp.pop();
+            if(l_ct > r_ct && num =='(')
+            {
+                l_ct--;
+            }
+            else
+            {
+                result+=num;
             }
         }
-
-        // Reverse the result string
-        std::reverse(result.begin(), result.end());
+        reverse(result.begin(),result.end());
         return result;
     }
 };

@@ -34,10 +34,9 @@ int dfs(TreeNode* node,int pathSum)
         return pathSum;
     }
 
-    int leftsum=dfs(node->left,pathSum);
-    int rightsum=dfs(node->right,pathSum);
+    
 
-    return leftsum+rightsum;
+    return  dfs(node->left,pathSum) + dfs(node->right,pathSum);
 
 }
     int sumNumbers(TreeNode* root) {

@@ -1,5 +1,6 @@
 class Solution {
 public:
+    
     int openLock(vector<string>& deadends, string target) {
 
           unordered_set<string> dead(deadends.begin(),deadends.end());
@@ -47,5 +48,6 @@ public:
 
 
         return -1;
+       
     }
 };

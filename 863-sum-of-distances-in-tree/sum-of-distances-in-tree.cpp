@@ -1,44 +1,52 @@
+#include <vector>
+#include <unordered_map>
+
+using namespace std;
+
 class Solution {
 private:
-    unordered_map<int, vector<int>> graph;
     vector<int> count;
-    vector<int> res;
+    vector<int> result;
+    vector<vector<int>> *adj;
+    int N;
 
-    void dfs(int node, int parent) {
-        for (int child : graph[node]) {
-            if (child != parent) {
-                dfs(child, node);
-                count[node] += count[child];
-                res[node] += res[child] + count[child];
-            }
+    void dfs1(int node, int parent) {
+        for (int child : (*adj)[node]) {
+            if (child == parent) continue;
+            dfs1(child, node);
+            count[node] += count[child];
+            result[node] += result[child] + count[child];
         }
     }
 
     void dfs2(int node, int parent) {
-        for (int child : graph[node]) {
-            if (child != parent) {
-                res[child] = res[node] - count[child] + (count.size() - count[child]);
-                dfs2(child, node);
-            }
+        for (int child : (*adj)[node]) {
+            if (child == parent) continue;
+            result[child] = result[node] - count[child] + (N - count[child]);
+            dfs2(child, node);
         }
     }
 
 public:
     vector<int> sumOfDistancesInTree(int n, vector<vector<int>>& edges) {
-        graph.clear();
-        count = vector<int>(n, 1);
-        res = vector<int>(n, 0);
+        N = n;
+        adj = new vector<vector<int>>(n);
 
-        for (auto& edge : edges) {
-            int u = edge[0];
-            int v = edge[1];
-            graph[u].push_back(v);
-            graph[v].push_back(u);
+        for (const auto& edge : edges) {
+            int m = edge[0];
+            int n = edge[1];
+            (*adj)[m].push_back(n);
+            (*adj)[n].push_back(m);
         }
 
-        dfs(0, -1);
+        count.assign(n, 1);
+        result.assign(n, 0);
+
+        dfs1(0, -1);
         dfs2(0, -1);
 
-        return res;
+        delete adj;
+
+        return result;
     }
 };

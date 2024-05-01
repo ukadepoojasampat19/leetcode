@@ -1,7 +1,7 @@
 class Solution {
 public:
     string reversePrefix(string word, char ch) {
-        int i;
+       /* int i;
         for(i=0;i<word.size();i++)
         {
                 if(word[i] == ch)
@@ -23,6 +23,13 @@ public:
             l++;
             r--;
 
+        }
+        return word;*/
+
+        int j=word.find(ch);
+        if(j != -1)
+        {
+            reverse(word.begin(),word.begin() +j+1);
         }
         return word;
     }

@@ -25,25 +25,19 @@ public:
            
         }
         return sum;*/
-         // Sort the vector in ascending order
-        std::sort(happiness.begin(), happiness.end());
+         sort(happiness.begin(),happiness.end(),greater<int>());
+         int turn=0;
+         long long happ_score=0;
+         for(auto& a: happiness)
+         {
+            if(turn == k)
+            {
+                break;
 
-        // Reverse the vector to get descending order
-        std::reverse(happiness.begin(), happiness.end());
-
-        int selected = 0;
-        long long happinessScore = 0; // Use long long to handle larger sums
-
-        // Iterate over the sorted happiness values
-        for (int score : happiness) {
-            if (selected == k) {
-                break; // Stop if 'k' elements have been selected
             }
-            // Calculate and add the adjusted happiness value if it's positive
-            happinessScore += std::max(0, score - selected);
-            selected++;
-        }
-
-        return happinessScore;
+            happ_score+=max(0,a-turn);
+            turn++;
+         }
+         return happ_score;
     }
 };

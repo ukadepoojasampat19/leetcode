@@ -2,7 +2,7 @@ class Solution {
 public:
     int numSteps(string s) {
 
-    int steps=0;
+    /*int steps=0;
     
     while(s.length() > 1)
     {
@@ -34,6 +34,28 @@ public:
         }
           steps++;
     }   
-    return steps;
+    return steps;*/
+
+    int op=0;
+    int  n=s.length()-1;
+    int carry=0;
+    for(int i=n;i>=1;i--)
+    {
+        
+        int num= (s[i] -'0') + carry;
+       
+         if(num % 2 != 0)
+         {
+              op+=2;
+            carry=1;
+           
+         }
+       else
+        {
+            op+=1;
+        }
+    }    
+    return op + carry;
     }
+    
 };

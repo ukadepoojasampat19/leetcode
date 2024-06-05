@@ -2,7 +2,7 @@ class Solution {
 public:
     string reverseWords(string s) {
         //buid in function
-      /*  string word;
+        string word;
         string words="";
         istringstream iss(s);
         while(iss >> word)
@@ -10,10 +10,10 @@ public:
             words=word+" "+words;
         }
         
-        return words.substr(0,words-1);*/
+        return words.substr(0,words.size()-1);
 
         //two pointer approach
-        reverse(s.begin(),s.end());
+        /*reverse(s.begin(),s.end());
         int l=0;
         int r=0;
         string result="";
@@ -36,7 +36,7 @@ public:
            
             i++;
         }
-        return s.substr(0,r-1);
+        return s.substr(0,r-1);*/
 
     }
 };

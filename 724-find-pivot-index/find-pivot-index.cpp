@@ -28,30 +28,24 @@ public:
         }
 
         return -1;*/
-         int total_sum = 0, left_sum = 0;
+       int total_sum =0,left_sum=0;
+       
 
-        // Calculate the total sum of the array
-        for (int num : nums) {
-            total_sum += num;
-        }
+       for(auto &n : nums)
+       {
+          total_sum += n;
+       }
 
-        // Iterate through the array to find the pivot index
-        for (int i = 0; i < nums.size(); i++) {
-            // Right sum for index i can be derived from total_sum and left_sum
-            int right_sum = total_sum - left_sum - nums[i];
+       for(int i=0; i<nums.size();i++)
+       {
+          int right_sum = total_sum - left_sum - nums[i];
 
-            // Check if left sum equals right sum
-            if (left_sum == right_sum) {
-                return i;
-            }
-
-            // Update left sum for the next index
-            left_sum += nums[i];
-        }
-
-        // If no pivot index is found, return -1
+          if(left_sum == right_sum)
+          {
+            return i;
+          }
+          left_sum += nums[i];
+       }
         return -1;
-        
-
     }
 };

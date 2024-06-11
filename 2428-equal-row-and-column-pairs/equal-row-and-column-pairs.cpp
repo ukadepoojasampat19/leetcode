@@ -2,43 +2,23 @@ class Solution {
 public:
     int equalPairs(vector<vector<int>>& grid) {
         int n = grid.size();
-
-        vector<string> row;
-        vector<string> col;
-        
+        int count = 0;
+        map<vector<int>, int> mp;
         for(int i=0;i<n;i++)
         {
-            string rowStr = "";
-            for(int j=0;j<n;j++)
-            {
-                rowStr += to_string(grid[i][j]) + ",";
-            }
-            row.push_back(rowStr);
+            mp[grid[i]]++;
         }
 
-        for(int i=0;i<n;i++)
+        for(int c=0;c<n;c++)
         {
-            string colStr = "";
-            for(int j=0;j<n;j++)
+            vector<int> temp;
+            for(int r=0;r<n;r++)
             {
-                colStr += to_string(grid[j][i]) + ",";
+                temp.push_back(grid[r][c]);
+
             }
-            col.push_back(colStr);
+            count += mp[temp];
         }
-
-        int ans = 0;
-
-        for(int i=0;i<row.size();i++)
-        {
-            for(int j=0;j<col.size();j++)
-            {
-                if(row[i] == col[j])
-                {
-                    ans++;
-                }
-            }
-        }
-
-        return ans;
+        return count;
     }
 };

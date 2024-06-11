@@ -42,6 +42,7 @@ public:
     
     // If the sorted frequency vectors are not the same, return false
     return vec1 == vec2;
+    return true;
         
     }
 };

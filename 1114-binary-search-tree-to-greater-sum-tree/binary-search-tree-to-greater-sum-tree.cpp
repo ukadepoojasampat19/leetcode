@@ -11,23 +11,37 @@
  */
 class Solution {
 public:
-    int sum = 0; // to keep track of the cumulative sum
-    
-    void bst_greater(TreeNode* node) {
-       if(node == nullptr) return;
+    void  bst_greater(TreeNode* temp,vector<int> &store)
+    {
+        if (temp == nullptr) return;
 
-       //first travel right
-       bst_greater(node->right);
-
-       sum += node->val;
-       node->val = sum;
-
-       //travel left
-       bst_greater(node->left);
+        bst_greater(temp->left,store);
+        int value = temp->val;
+        int sum=0;
+        for(int i=0;i<store.size();i++)
+        {
+            if(store[i] >= value)
+            {
+                sum += store[i];
+            }
+        }
+        temp->val = sum;
+        bst_greater(temp->right,store);
+        
     }
-    
+    void  bst(TreeNode* temp,vector<int> &store)
+    {
+        if (temp == nullptr) return;
+        bst(temp->left,store);
+        store.push_back(temp->val);
+        bst(temp->right,store);
+    }
     TreeNode* bstToGst(TreeNode* root) {
-       bst_greater(root);
-       return root;
+        vector<int> store;
+        
+        bst(root,store);
+       
+        bst_greater(root,store);
+        return root;
     }
 };

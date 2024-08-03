@@ -1,29 +1,19 @@
 class Solution {
 public:
-    void solve(vector<int>& nums,vector<int>& currSubset,int index,vector<vector<int>>& result)
-    {
-       if(index == nums.size())
-       {
-           result.push_back(currSubset);
-           return;
-       }
-        
-        solve(nums,currSubset,index + 1,result);
-        
-        currSubset.push_back(nums[index]);
-        solve(nums,currSubset,index+1,result);
-        
-        currSubset.pop_back(); //backtrack
-       
-        
-        
-        
-    }
     vector<vector<int>> subsets(vector<int>& nums) {
-        vector<int> currSubset;
+        int n = nums.size();
+        int last_idx = (1 << n);
         vector<vector<int>> result;
         
-        solve(nums,currSubset,0,result);
-         return result;
+        for(int i = 0; i < last_idx; i++) {
+            vector<int> temp;
+            for(int j = 0; j < n; j++) {
+                if(i & (1 << j)) {
+                    temp.push_back(nums[j]);
+                }
+            }
+            result.push_back(temp);
+        } 
+        return result;
     }
 };

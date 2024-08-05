@@ -9,6 +9,9 @@ public:
 
         if(curr_sum % 2 != 0) return false;
         int target = curr_sum / 2;
+
+        //TABULATION APPROACH
+        /*
         vector<vector<bool>> dp(nums.size()+1,vector<bool>(target+1,0));
 
         dp[0][0] = true;
@@ -27,6 +30,19 @@ public:
                     }
             }
         }
-        return dp[nums.size()][target];
+        return dp[nums.size()][target];*/
+
+        //MEMOIZATION APPROACH IN TABLE
+        vector<bool> dp(target+1,false);
+        dp[0]= true;
+
+        for(auto& n: nums)
+        {
+            for(int j=target; j>=n; j--)
+            {
+                dp[j] = dp[j] || dp[j - n];
+            }
+        }
+        return dp[target];
     }
 };

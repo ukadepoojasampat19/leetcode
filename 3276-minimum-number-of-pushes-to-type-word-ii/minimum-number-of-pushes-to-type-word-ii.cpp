@@ -1,31 +1,20 @@
 class Solution {
 public:
     int minimumPushes(string word) {
-
-        vector<int> hashMap(26,0);
-
-        for(auto &c: word){
-            hashMap[c-'a']++;
+        vector<int> mp(26,0);
+        for(auto& n: word)
+        {
+            mp[n -'a']++;
         }
 
-        sort(hashMap.begin(),hashMap.end(),greater<int>());
-
-        int ans = 0;
-        int push = 1;
-        int keyCnt = 0;
-
-        for(auto &freq: hashMap){
-
-            if(freq == 0) break;
-
-            ans += freq * push;
-            keyCnt++;
-
-            if(keyCnt % 8 == 0) push++;
-            
+        int result =0;
+        sort(mp.begin(),mp.end(),greater<int>());
+        for(int i=0;i<26;i++)
+        {
+            int freq = mp[i];
+            int press = i/8 +1;
+            result += freq * press;
         }
-
-        return ans;
-        
+        return result;
     }
 };

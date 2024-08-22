@@ -1,30 +1,29 @@
 class Solution {
 public:
-    int recurr(int idx, vector<int>& nums, int sum, int target, vector<vector<int>>& dp) {
-        // Base case: if we have considered all numbers
-        if (idx == nums.size()) {
-            // If the sum equals the target, we found a valid expression
-            return sum == target ? 1 : 0;
-        }
-
-        // Check if the result is already computed
-        if (dp[idx][sum + 1000] != -1) { // We use +1000 to handle negative sums
-            return dp[idx][sum + 1000];
-        }
-
-        // Try adding the current number
-        int add = recurr(idx + 1, nums, sum + nums[idx], target, dp);
-        
-        // Try subtracting the current number
-        int subtract = recurr(idx + 1, nums, sum - nums[idx], target, dp);
-
-        // Store the result in the DP table and return it
-        return dp[idx][sum + 1000] = add + subtract;
-    }
-
     int findTargetSumWays(vector<int>& nums, int target) {
-        // DP table: offset by 1000 to handle negative sums (since sum can range from -1000 to +1000)
-        vector<vector<int>> dp(nums.size(), vector<int>(2001, -1));
-        return recurr(0, nums, 0, target, dp);
+        // Total sum of the array
+        int totalSum = accumulate(nums.begin(), nums.end(), 0);
+        
+        // If the target is out of the possible range, return 0
+        if (target > totalSum || target < -totalSum) {
+            return 0;
+        }
+        
+        // DP table: offset by totalSum to handle negative sums (sum ranges from -totalSum to totalSum)
+        vector<vector<int>> dp(nums.size() + 1, vector<int>(2 * totalSum + 1, 0));
+        
+        // Base case: one way to achieve a sum of 0 with no elements
+        dp[0][totalSum] = 1;
+        
+        for (int i = 1; i <= nums.size(); i++) {
+            for (int sum = -totalSum; sum <= totalSum; sum++) {
+                if (dp[i - 1][sum + totalSum] > 0) {
+                    dp[i][sum + nums[i - 1] + totalSum] += dp[i - 1][sum + totalSum];
+                    dp[i][sum - nums[i - 1] + totalSum] += dp[i - 1][sum + totalSum];
+                }
+            }
+        }
+        
+        return dp[nums.size()][target + totalSum];
     }
 };

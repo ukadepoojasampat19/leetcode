@@ -11,21 +11,19 @@
  */
 class Solution {
 public:
-    void  pot(TreeNode* node,vector<int>& temp)
+    void postorder_trav(vector<int>& res,TreeNode*  root)
     {
-        if(!node)
-        {
-            return;
-        }
-        pot(node->left,temp);
-        pot(node->right,temp);
-        temp.push_back(node->val);
-
-
+        if(root == nullptr) return;
+            postorder_trav(res,root->left);
+            postorder_trav(res,root->right);
+            res.push_back(root->val);
+            
     }
     vector<int> postorderTraversal(TreeNode* root) {
-        vector<int> temp;
-        pot(root,temp);
-        return temp;
+        vector<int> res;
+
+        postorder_trav(res,root);
+        return res;
+        
     }
 };

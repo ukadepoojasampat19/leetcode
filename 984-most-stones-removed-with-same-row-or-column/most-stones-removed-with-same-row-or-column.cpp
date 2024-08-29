@@ -1,33 +1,31 @@
 class Solution {
 public:
-    int removeStones(vector<vector<int>>& stones) {
-        int n = stones.size();
-        int row_ct = 0;
-        int col_ct = 0;
+    void  dfs(vector<bool>& visited,vector<vector<int>>& stones,int idx)
+    {
+        visited[idx] = true;
 
-        // Set to track visited stones
-        vector<bool> visited(n, false);
-
-        // Function to perform DFS and mark connected stones
-        auto dfs = [&](int i, auto& dfs) -> void {
-            visited[i] = true;
-            for (int j = 0; j < n; j++) {
-                if (!visited[j] && (stones[i][0] == stones[j][0] || stones[i][1] == stones[j][1])) {
-                    dfs(j, dfs);
-                }
-            }
-        };
-
-        // Count the number of connected components (i.e., stones that can't be removed)
-        int components = 0;
-        for (int i = 0; i < n; i++) {
-            if (!visited[i]) {
-                components++;
-                dfs(i, dfs);
+        for(int i=0;i<stones.size();i++)
+        {
+            int r = stones[idx][0];
+            int col = stones[idx][1];
+            if(visited[i] == false && (stones[i][0] == r || stones[i][1] == col))
+            {
+                dfs(visited, stones, i);
             }
         }
+    }
+    int removeStones(vector<vector<int>>& stones) {
+        int n = stones.size();
 
-        // Number of stones that can be removed = Total stones - number of components
-        return n - components;
+        vector<bool> visited(n,false);
+        int group=0;
+        for(int i=0;i<n;i++)
+        {
+            if(visited[i] == true) continue;
+
+            dfs(visited,stones,i);
+            group++;
+        }
+        return n- group;
     }
 };

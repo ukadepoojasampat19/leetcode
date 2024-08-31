@@ -1,29 +1,27 @@
 class Solution {
 public:
+   
     string stringHash(string s, int k) {
         int n = s.length();
+        int mid = n/k;
         string result;
-
-        // Ensure that the string length is a multiple of k
-        if (n % k != 0) {
-            return "Invalid input: n must be a multiple of k.";
+        vector<string> res;
+        if(n % k!= 0)
+        {
+            return "";
         }
-
-        // Iterate over the string in steps of k to create substrings
-        for (int i = 0; i < n; i += k) {
-            string sub = s.substr(i, k);
-            int sum = 0;
-
-            // Calculate the sum of hash values for the substring
-            for (char c : sub) {
-                sum += c - 'a';  // Convert character to 0-indexed position in the alphabet
+        for(int i=0;i<s.length();i+=k)
+        {
+            string temp = s.substr(i,k);
+            int num =0;
+            for(char val : temp)
+            {
+               num += val- 'a';
             }
-
-            // Find the corresponding character for the remainder when divided by 26
-            int hashedChar = sum % 26;
-            result += (hashedChar + 'a');  // Convert back to character and append to result
+            int sum = num % 26;
+             result+= sum +'a';
+            
         }
-
         return result;
     }
 };

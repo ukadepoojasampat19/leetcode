@@ -1,27 +1,27 @@
 class Solution {
 public:
     vector<int> missingRolls(vector<int>& rolls, int mean, int n) {
-        ios::sync_with_stdio(false);
-        cin.tie(nullptr);
+        int m = rolls.size();
+        int total_sum = mean * (m+n);
+        int curr_sum=0;
+        for(auto& n: rolls)
+        {
+            curr_sum += n;
+        }
+        int missing_sum = total_sum - curr_sum;
+        //if the sum is in valid range 
+        if(missing_sum < n || missing_sum > (n*6))
+        {
+            return {};
+        }
 
-        int nNumsSum = 0;
-        for(int i : rolls) nNumsSum += i;
-
-        int m=rolls.size();
-        int totalLength = n+m;
-
-        int mNumsSum = mean*totalLength - nNumsSum;     // formula to Find mean -> (nNumsSum + X) / (n+m) = mean
-                                                        // So, X = mean * (n+m) - nNumsSum;
-
-        if(n*6 < mNumsSum || mNumsSum<n) return {};     // for (n*6 < mNumsSum) see Constraints
+        vector<int> result(n, missing_sum/n);
+        int rem = missing_sum % n;
+        for(int i=0;i<rem;i++)
+        {
+            result[i]++;
+        }
+        return result;
         
-        int rem = mNumsSum % n;
-        int q   = mNumsSum / n;
-
-        vector<int> res(n,q);
-        for(int i=1; i<=rem; i++)
-            res[i]++;
-
-        return res;
     }
 };

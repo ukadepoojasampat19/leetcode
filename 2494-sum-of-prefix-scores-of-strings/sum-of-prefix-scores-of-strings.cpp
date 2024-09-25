@@ -3,13 +3,14 @@ struct Node
     Node* link[26];
     int ct =0;
 
-    bool containkey(char ch)
+
+    bool containKey(char ch)
     {
-        return (link[ch -'a'] != NULL);
+        return (link[ch - 'a'] != NULL);
     }
-    void put(char ch,Node* node)
+    void put(char ch, Node* node)
     {
-        link[ch - 'a'] = node;
+        link[ch -'a'] = node;
     }
     Node* get(char ch)
     {
@@ -29,47 +30,47 @@ struct Node
 
 class Solution {
 private:
-   Node* root;
+        Node* root;
 public:
+
     Solution()
     {
         root = new Node();
     }
 
-    //insert
     void insert(string word)
     {
         Node* node = root;
         for(int i=0;i<word.length();i++)
         {
-            node->increment();
-            if(!node->containkey(word[i]))
+            if(!node->containKey(word[i]))
             {
                 node->put(word[i],new Node());
             }
             node = node->get(word[i]);
+            node->increment();
         }
-        node->increment();
+
     }
 
-    bool startWith(string prefix,vector<int>& res,int n)
+    bool startWith(string prefix,vector<int>& res, int n)
     {
         Node* node = root;
         int count =0;
-        for(int i=0;i<prefix.length();i++)
+        for(int i=0;i<prefix.size();i++)
         {
-            node= node->get(prefix[i]);
+            
+            node = node->get(prefix[i]);
             count += node->getCount();
+
         }
         res[n] = count;
         return true;
     }
     vector<int> sumPrefixScores(vector<string>& words) {
-
-        Solution obj ;
-        int m = words.size();
-        vector<int> res(m);
-        for(int i=0;i<m;i++)
+        Solution obj;
+        vector<int> res(words.size());
+        for(int i=0;i<words.size();i++)
         {
             obj.insert(words[i]);
         }
@@ -77,6 +78,7 @@ public:
         {
             obj.startWith(words[i],res,i);
         }
+
         return res;
     }
 };

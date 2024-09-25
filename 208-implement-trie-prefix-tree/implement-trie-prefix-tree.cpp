@@ -1,95 +1,85 @@
-class Trie {
-public:
-    //structre define kele
-    struct trieNode
-    {
-        bool isendofnode;
-        trieNode *children[26];
-    };
+ struct Node
+ {
+    Node* link[26];
+    bool flag = false;
 
-    //form new node
-    trieNode* getnode()
+    bool containkey(char ch)
     {
-        trieNode *newNode = new trieNode();
-        newNode->isendofnode = false;
-        for(int i=0;i<26;i++)
-        {
-            newNode->children[i] = NULL;
-        }
-        return newNode;
+        return (link[ch - 'a'] != NULL);
     }
+    void put(char ch, Node* node)
+    {
+        link[ch - 'a'] = node;
+    }
+    Node* get(char ch)
+    {
+        return link[ch -'a'];
+    }
+    void setEnd()
+    {
+        flag = true;
+    }
+    bool isEnd()
+    {
+        return flag;
+    }
+   
+ };
 
-    trieNode* root;
+
+
+
+class Trie {
+
+private:
+     Node* root;
+public:
     Trie() {
-        root = getnode();
+        root = new Node();
     }
     
     void insert(string word) {
-    trieNode* crawler = root;
-    for(int i=0;i< word.length();i++)
-    {
-        
-        char ch = word[i];
-        int idx =  ch - 'a';
-
-        if(crawler->children[idx] == NULL)
+            Node * node =root;
+        for(int i=0;i<word.length();i++)
         {
-            crawler->children[idx] = getnode();
+            if(!node->containkey(word[i]))
+            {
+                node->put(word[i],new Node());
+            }
+            node = node->get(word[i]);
         }
-
-        crawler = crawler->children[idx];
-    }
-
-        crawler->isendofnode = true;
+        node->setEnd();
         
     }
     
     bool search(string word) {
-     trieNode* crawler = root;
-    for(int i=0;i< word.length();i++)
-    {
-       
-        char ch = word[i];
-        int idx =  ch - 'a';
 
-        if(crawler->children[idx] == NULL)
+        Node * node =root;
+        for(int i=0;i<word.length();i++)
         {
-            return false;;
+           
+            if(!node->containkey(word[i]))
+            {
+                return false;
+
+            }
+            node = node->get(word[i]);
         }
-
-        crawler = crawler->children[idx];
-    }
-
-    if(crawler->isendofnode == true && crawler != NULL)
-    {
-        return true;
-    }
-    return false;
+        return node->isEnd();
         
     }
     
     bool startsWith(string prefix) {
-     trieNode* crawler = root;
-        int i;
-     for(i=0;i< prefix.length();i++)
-    {
-       
-        char ch = prefix[i];
-        int idx =  ch - 'a';
-
-        if(crawler->children[idx] == NULL)
+        Node* node = root;
+        for(int i=0;i<prefix.length();i++)
         {
-            return false;;
+            if(!node->containkey(prefix[i]))
+            {
+                return false;
+            }
+            node = node->get(prefix[i]);
         }
-
-        crawler = crawler->children[idx];
-    }
-
-    if( i == prefix.length())
-    {
         return true;
-    }
-        return false;
     }
 };
 

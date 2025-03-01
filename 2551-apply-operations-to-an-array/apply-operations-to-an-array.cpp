@@ -2,28 +2,22 @@ class Solution {
 public:
     vector<int> applyOperations(vector<int>& nums) {
         int n = nums.size();
-        vector<int> modifiedNums;
-
-        // Step 1: Apply operations on the array
-        for (int index = 0; index < n - 1; index++) {
-            if (nums[index] == nums[index + 1] && nums[index] != 0) {
-                nums[index] *= 2;
-                nums[index + 1] = 0;
+        vector<int> res(n,0);
+        for(int i=0;i<(n-1);i++)
+        {
+            if(nums[i] == nums[i+1]){
+                nums[i] = nums[i] * 2;
+                nums[i+1] = 0;
             }
         }
-
-        // Step 2: Move non-zero elements to the front
-        for (int num : nums) {
-            if (num != 0) {
-                modifiedNums.push_back(num);
+       int ct=0;
+        for(int j=0;j<n;j++){
+            if(nums[j] != 0){
+                res[ct] = nums[j];
+                ct++;
             }
         }
-
-        // Step 3: Append zeros to maintain the original size
-        while (modifiedNums.size() < n) {
-            modifiedNums.push_back(0);
-        }
-
-        return modifiedNums;
+        return res;
+        
     }
 };

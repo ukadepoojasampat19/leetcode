@@ -1,14 +1,34 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        istringstream iss(s);
-        string word="";
-        string words="";
-        while(iss >> word)
-        {
-            words =word + " " +words;
+
+        string result = "";
+        string curr = "";
+
+        for(char ch : s){
+
+            if(ch != ' '){
+
+                curr += ch;
+
+            }else{
+
+                if(curr != ""){
+
+                    result = curr + " " + result;
+                    curr = "";
+                }
+            }
         }
-        return words.substr(0, words.length()-1);
-        
+
+        if(curr != ""){
+            result = curr + " " + result;
+        }
+
+        while(!result.empty() && result.back() == ' '){
+            result.pop_back();
+        }
+
+        return result;
     }
 };

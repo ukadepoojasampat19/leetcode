@@ -28,7 +28,7 @@ public:
         int col = matrix[0].size();
 
         for(int i=0;i<row;i++){
-            for(int j=i;j<col;j++){
+            for(int j=i+1;j<col;j++){
                 if( i == j) continue;
                 int temp = matrix[i][j];
                 matrix[i][j] = matrix[j][i];

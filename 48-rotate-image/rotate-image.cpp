@@ -1,10 +1,6 @@
 class Solution {
 public:
-    void filled_temp(int r,int n,vector<vector<int>>& temp, vector<int>& res){
-        for(int i=0;i<n;i++){
-            temp[i][n-1-r] = res[i];
-        }
-    }
+  
 
     
     void rotate(vector<vector<int>>& matrix) {
@@ -17,9 +13,9 @@ public:
 
             for(int j=0;j<n;j++){
 
-                res[j] = matrix[i][j];
+                temp[j][n-1-i] =matrix[i][j];
             }
-            filled_temp(i,n,temp,res);
+            
         }
         matrix = temp;
     }

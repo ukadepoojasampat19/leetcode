@@ -1,22 +1,23 @@
 class Solution {
 public:
     vector<vector<int>> generate(int numRows) {
-        vector<vector<int>> result;
+      
 
-        for(int i=0;i<numRows;i++)
-        {
-            vector<int> row(i+1,1);  //number of rows with all value is 1
-
-            for(int j=1;j<i;j++)
-            {
-                row[j] = result[i-1][j-1] + result[i-1][j];
-
+        vector<vector<int>> res;
+        for(int i=0;i<numRows;i++){
+            //create a new row 
+            res.push_back(vector<int>(i+1));
+            for(int j=0; j<=i;j++){
+                if(j == 0 || i==j){
+                    res[i][j] = 1;
+                    cout<<res[i][j]<<" ";
+                    continue;
+                }
+                res[i][j] = res[i-1][j] + res[i-1][j-1];
+                cout<<res[i][j]<<" ";
             }
-
-            result.push_back(row);
+            cout<<"\n";
         }
-        return result;
-
-        
+        return res;
     }
 };

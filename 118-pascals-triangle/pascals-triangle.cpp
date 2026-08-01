@@ -1,23 +1,25 @@
 class Solution {
 public:
-    vector<vector<int>> generate(int numRows) {
-      
-
-        vector<vector<int>> res;
-        for(int i=0;i<numRows;i++){
-            //create a new row 
-            res.push_back(vector<int>(i+1));
-            for(int j=0; j<=i;j++){
-                if(j == 0 || i==j){
-                    res[i][j] = 1;
-                    cout<<res[i][j]<<" ";
-                    continue;
-                }
-                res[i][j] = res[i-1][j] + res[i-1][j-1];
-                cout<<res[i][j]<<" ";
-            }
-            cout<<"\n";
+    vector<int> pascal_row(int row){
+        long long ans = 1;
+        vector<int> temp;
+        temp.push_back(1);
+        for(int col =1;col<row;col++){
+            ans = ans * (row -col);
+            ans = ans / (col);
+            temp.push_back(ans);
         }
-        return res;
+        return temp;
+    }
+    vector<vector<int>> generate(int numRows) {
+    vector<vector<int>> res;
+
+for(int i =1;i<=numRows;i++){
+   res.push_back(pascal_row(i)); 
+}
+return res;
+   
+
+
     }
 };

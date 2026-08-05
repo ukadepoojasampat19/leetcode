@@ -1,28 +1,27 @@
 class Solution {
 public:
-    void  getAllSubset(int idx,vector<int>& nums, vector<vector<int>>& ans,vector<int>& curr){
-
-            if(idx == nums.size()){
-                if (find(ans.begin(), ans.end(), curr) == ans.end()){
-                      ans.push_back(curr);
-                }
+     void getCombinationSum2(int idx,vector<int>& nums,vector<int>& res,   vector<vector<int>>& ans){
               
-                return;
-            }
+                    ans.push_back(res);
 
 
-        curr.push_back(nums[idx]);
-        getAllSubset(idx + 1,nums,ans,curr);
-        curr.pop_back();
-        getAllSubset(idx + 1,nums,ans,curr);
+                for(int i=idx;i<nums.size();i++){
+                    if(i != idx && nums[i] == nums[i-1]) continue;
+
+
+                    res.push_back(nums[i]);
+            getCombinationSum2(i +1,nums,res,ans);
+                    res.pop_back();
+                }
+    
 
     }
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
-          vector<vector<int>> ans;
-          vector<int> curr;
-          sort(nums.begin(),nums.end());
+        sort(nums.begin(),nums.end());
+        vector<vector<int>> ans;
+        vector<int> res;
 
-          getAllSubset(0,nums,ans,curr);
-          return ans;
+        getCombinationSum2(0,nums,res,ans);
+        return ans;
     }
 };
